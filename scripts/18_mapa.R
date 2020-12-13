@@ -37,3 +37,13 @@ ggplot() +
 
 # Exportación de mapa
 ggsave("18.png", width = 6, height = 6)
+
+# Para añadir información sobre la costa
+# Descargar la información en OSM de la costa dentro de tu límite del mapa.
+# En este ejemplo de Granada no tendría sentido porque no tiene mar, pero por seguir los datos del ejemplo
+coastline_data <- opq(c(-3.65, 37.225, -3.55, 37.13)) %>% 
+  add_osm_feature(key = 'natural', value = 'coastline') %>% 
+  osmdata_sf()
+
+#Introducimos esta línea dentro de la función ggplot como las calles o los ríos
+  geom_sf(data = coastline_data$osm_lines, inherit.aes = FALSE, color = "#7fc0ff", size = .8, alpha = .5) +
